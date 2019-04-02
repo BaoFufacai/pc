@@ -68,39 +68,163 @@
     </header>
     <!--内容区-->
     <section id="content">
-
+        <!--每一屏的容器-->
+        <ul class="contentList">
+            <!--第一屏-->
+            <li class="contentItem">
+                <div class="contentInner">
+                    home
+                </div>
+            </li>
+            <!--第二屏-->
+            <li class="contentItem">
+                <div class="contentInner">
+                    Course
+                </div>
+            </li>
+            <!--第三屏-->
+            <li class="contentItem">
+                <div class="contentInner">
+                    Works
+                </div>
+            </li>
+            <!--第四屏-->
+            <li class="contentItem">
+                <div class="contentInner">
+                    About
+                </div>
+            </li>
+            <!--第五屏-->
+            <li class="contentItem">
+                <div class="contentInner">
+                    Team
+                </div>
+            </li>
+        </ul>
     </section>
 </div>
 
-<script type="text/javascript">
+<script>
     window.onload =  function () {
         //获取元素
+        var header = document.getElementById('header');
         var navUps = document.querySelectorAll('#header .headerMain .nav .navList .navItem .up');
         var arrow = document.querySelector('#header .headerMain .arrow');
         var navItem = document.querySelectorAll('#header .headerMain .nav .navList .navItem');
+        var content = document.getElementById('content');
+        var contentItems = document.querySelectorAll('#content .contentList .contentItem');
+        var contentList = document.querySelector('#content .contentList');
+        var index = 0
 
         //初始化第一个up元素高亮
         navUps[0].style.width = '100%'
         //初始化三角的位置
         arrow.style.left = navItem[0].getBoundingClientRect().left + navItem[0].offsetWidth/2 + 'px';
 
-        for (var i=0; i<navItem.length; i++ ){
-            var item = navItem[i];
-            item.index = i
-            //给每一个导航项加点击事件
-            item.onclick = function () {
-                //1.给所有的up元素去除高亮
-                for (var j=0; j<navUps.length; j++ ){
-                    navUps[j].style.width = ''
+        //给每一个导航项加点击事件
+        headerBind()
+        function headerBind() {
+            for (var i=0; i<navItem.length; i++ ){
+                var item = navItem[i];
+                item.index = i //缓存计数器
+                //给每一个导航项加点击事件
+                item.onclick = function () {
+                    index = this.index
+                    contentMove(this.index)
                 }
-                //2.给当前点击的navItem所包含的up元素高亮
-                navUps[this.index].style.width = '100%'
-                //3.切换三角位置
-                arrow.style.left = navItem[this.index].getBoundingClientRect().left + navItem[this.index].offsetWidth/2 + 'px';
+            }
+        }
+
+        //内容区移动逻辑
+        function contentMove(index) {
+            //1.给所有的up元素去除高亮
+            for (var j=0; j<navUps.length; j++ ){
+                navUps[j].style.width = ''
+            }
+            //2.给当前点击的navItem所包含的up元素高亮
+            navUps[index].style.width = '100%'
+            //3.切换三角位置
+            arrow.style.left = navItem[index].getBoundingClientRect().left + navItem[index].offsetWidth/2 + 'px';
+            //4.切换屏幕
+            contentList.style.top = -(index) * (document.documentElement.clientHeight - header.offsetHeight) + 'px'
+
+        }
+
+        //内容区设置高度逻辑
+        contentBind()
+        function contentBind() {
+            //给内容区设置高度
+            content.style.height = document.documentElement.clientHeight - header.offsetHeight + 'px'
+            //给每一屏设置高度
+            for (var i=0; i<contentItems.length; i++ ){
+                contentItems[i].style.height = document.documentElement.clientHeight - header.offsetHeight + 'px'
+            }
+        }
+
+        //鼠标滚轮
+        Scroll()
+        function Scroll() {
+            //ie/chrome
+            document.onmousewheel = scrollMove;
+            //firefox
+            if(document.addEventListener){
+                document.addEventListener('DOMMouseScroll',scrollMove);
+            }
+
+            function scrollMove(event) {
+                event = event || window.event;
+                var flag = '';
+                if(event.wheelDelta){
+                    //ie/chrome
+                    if(event.wheelDelta > 0){
+                        //上
+                        flag = 'up';
+                    }else {
+                        //下
+                        flag = 'down'
+                    }
+                }
+                else if(event.detail){
+                    //firefox
+                    if(event.detail < 0){
+                        //上
+                        flag = 'up';
+                    }else {
+                        //下
+                        flag = 'down'
+                    }
+                }
+
+                switch (flag){
+                    case 'up':
+                        //鼠标滚轮向上滚动
+                        console.log('上')
+                        if(index>0){
+                            index--
+                            contentMove(index)
+                        }
+                        contentMove(index)
+                        break;
+                    case 'down':
+                        //鼠标滚轮向下滚动
+                        console.log('下')
+                        if(index<contentItems.length-1){
+                            index++
+                            contentMove(index)
+                        }
+
+                        break;
+                }
+
+                //取消默认行为
+                event.preventDefault && event.preventDefault();
+                return false;
             }
         }
 
     }
 </script>
+
+
 </body>
 </html>
