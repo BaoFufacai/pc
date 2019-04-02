@@ -23,7 +23,7 @@
             </h1>
             <!--右侧导航区域-->
             <nav class="nav">
-                <ul class="navList">
+                <ul class="navList clearfix">
                     <!--第一屏-->
                     <li class="navItem">
                         <a href="javascript:;">
@@ -85,14 +85,101 @@
             <!--第三屏-->
             <li class="contentItem">
                 <div class="contentInner">
-                    Works
+                    <div class="works1">
+                        <p class="commonTitle">EINBLICK</p>
+                        <p class="commonTitle">ERKENNTNIS</p>
+                        <p class="commonTitle">ERGEBNIS</p>
+                    </div>
+                    <div class="works2 clearfix">
+                        <div class="works2Item">
+                            <img src="./img/worksimg1.jpg">
+                            <div class="mask">
+                                <span class="maskText">我是一段文字</span>
+                                <div class="icon"></div>
+                            </div>
+                        </div>
+                        <div class="works2Item">
+                            <img src="./img/worksimg2.jpg">
+                            <div class="mask">
+                                <span class="maskText">我是一段文字</span>
+                                <div class="icon"></div>
+                            </div>
+                        </div>
+                        <div class="works2Item">
+                            <img src="./img/worksimg3.jpg">
+                            <div class="mask">
+                                <span class="maskText">我是一段文字</span>
+                                <div class="icon"></div>
+                            </div>
+                        </div>
+                        <div class="works2Item">
+                            <img src="./img/worksimg4.jpg">
+                            <div class="mask">
+                                <span class="maskText">我是一段文字</span>
+                                <div class="icon"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="works3">
+                        <div class="robot"></div>
+                    </div>
                 </div>
             </li>
             <!--第四屏-->
             <li class="contentItem">
                 <div class="contentInner">
-                    About
+                    <div class="about1">
+                        <p class="commonTitle">EINBLICK</p>
+                        <p class="commonTitle">ERKENNTNIS</p>
+                        <p class="commonTitle">ERGEBNIS</p>
+                    </div>
+                    <div class="about2">
+                        <p class="commonText">
+                            Der bunte Medienmix ist die Faszination die uns antreibt und das, was man an uns schätzt. Von A bis Z und von vorne bis hinten nehmen wir Ihr Projekt unter unsere Fittiche und lassen es zu etwas Großartigem heranwachsen.
+                        </p>
+                    </div>
+                    <div class="about3">
+                        <div class="about3Item">
+                            <img src="./img/about2.jpg">
+                            <div class="mask">
+                                <ul class="maskList clearfix">
+                                    <li class="maskItem">
+                                        <img src="./img/about1.jpg">
+                                    </li>
+                                    <li class="maskItem">
+                                        <img src="./img/about1.jpg">
+                                    </li>
+                                    <li class="maskItem">
+                                        <img src="./img/about1.jpg">
+                                    </li>
+                                    <li class="maskItem">
+                                        <img src="./img/about1.jpg">
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="about3Item">
+                            <img src="./img/about4.jpg">
+                            <div class="mask">
+                                <ul class="maskList clearfix">
+                                    <li class="maskItem">
+                                        <img src="./img/about3.jpg">
+                                    </li>
+                                    <li class="maskItem">
+                                        <img src="./img/about3.jpg">
+                                    </li>
+                                    <li class="maskItem">
+                                        <img src="./img/about3.jpg">
+                                    </li>
+                                    <li class="maskItem">
+                                        <img src="./img/about3.jpg">
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <div class="line"></div>
             </li>
             <!--第五屏-->
             <li class="contentItem">
@@ -114,12 +201,18 @@
         var content = document.getElementById('content');
         var contentItems = document.querySelectorAll('#content .contentList .contentItem');
         var contentList = document.querySelector('#content .contentList');
-        var index = 0
+        var index = 0;
+        var timeId;
 
         //初始化第一个up元素高亮
         navUps[0].style.width = '100%'
         //初始化三角的位置
         arrow.style.left = navItem[0].getBoundingClientRect().left + navItem[0].offsetWidth/2 + 'px';
+        //响应滚轮缩放
+        window.onresize=function(){
+            contentBind()
+            contentMove(index)
+        }
 
         //给每一个导航项加点击事件
         headerBind()
@@ -136,6 +229,7 @@
         }
 
         //内容区移动逻辑
+        contentMove(3)
         function contentMove(index) {
             //1.给所有的up元素去除高亮
             for (var j=0; j<navUps.length; j++ ){
@@ -165,10 +259,22 @@
         Scroll()
         function Scroll() {
             //ie/chrome
-            document.onmousewheel = scrollMove;
+            document.onmousewheel = function (event) {
+                //函数节流
+                clearTimeout(timeId)
+                timeId=setTimeout(function () {
+                    scrollMove(event)
+                },200);
+            }
             //firefox
             if(document.addEventListener){
-                document.addEventListener('DOMMouseScroll',scrollMove);
+                document.addEventListener('DOMMouseScroll',function (event) {
+                    //函数节流
+                    clearTimeout(timeId)
+                    timeId=setTimeout(function () {
+                        scrollMove(event)
+                    },200)
+                });
             }
 
             function scrollMove(event) {
@@ -212,10 +318,8 @@
                             index++
                             contentMove(index)
                         }
-
                         break;
                 }
-
                 //取消默认行为
                 event.preventDefault && event.preventDefault();
                 return false;
