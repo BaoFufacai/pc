@@ -259,7 +259,22 @@
             <!--第五屏-->
             <li class="contentItem">
                 <div class="contentInner">
-                    Team
+                   <div class="Ieam1">
+                       <P CLASS="commonTitle">WIR SIND</P>
+                       <P CLASS="commonTitle">VOXELAIR</P>
+                   </div>
+                   <div class="Ieam2">
+                       <p class="commonText">Wir sind seit 2002 eine Full-Service-Werbeagentur mit Stammsitz in Heimsheim, zwischen Stuttgart und Karlsruhe.</p>
+                       <p class="commonText">Über 60 Jahre Erfahrung vereinen das gesamte VoxelAir-Team. Dabei hat jedes Voxel neben professionellem Allroundwissen auch sein ganz spezielles Gebiet, um selbst die individuellsten Kundenwünsche schnell und kompetent umzusetzen.</p>
+                   </div>
+                   <div class="Ieam3">
+                       <div class="Ieam3Lits">
+                           <div class="Ieam3nav"></div>
+                           <div class="Ieam3nav"></div>
+                           <div class="Ieam3nav"></div>
+                           <div class="Ieam3nav"></div>
+                       </div>
+                   </div>
                 </div>
             </li>
         </ul>
@@ -276,8 +291,12 @@
         var content = document.getElementById('content');
         var contentItems = document.querySelectorAll('#content .contentList .contentItem');
         var contentList = document.querySelector('#content .contentList');
+        var HomeListItems=document.querySelectorAll('#content .contentList .contentItem .contentInner .HomeList .HomeListItem')
+        var HomenavItems=document.querySelectorAll('#content .contentList .contentItem .contentInner .HomeListNav .HomenavItem')
         var index = 0;
+        var olIndex=0;
         var timeId;
+        var isAnimation=false
 
         //初始化第一个up元素高亮
         navUps[0].style.width = '100%'
@@ -304,7 +323,7 @@
         }
 
         //内容区移动逻辑
-        contentMove(0)
+        contentMove(4)
         function contentMove(index) {
             //1.给所有的up元素去除高亮
             for (var j=0; j<navUps.length; j++ ){
@@ -404,8 +423,76 @@
 
 
 
-        //动画
+        //轮播图点击切换
+        home3D()
+       function home3D() {
+           for(var i=0;i<HomenavItems.length;i++){
+               var item=HomenavItems[i]
+               item.index=i
+               item.onclick=function () {
+                   if(isAnimation){
+                       //自懂切换中
+                       return
+                   }
+                   //重置轮播图
+                   isAnimation=true
+                   setTimeout(function () {
+                       isAnimation=false
+                   },3000)
+                   //1.重置所有小圆点
+                   for(var j=0;j<HomenavItems.length;j++){
+                       HomenavItems[j].className='HomenavItem'
+                   }
+                   //2.切换那个小圆点小圆点高亮
+                   this.className='HomenavItem active'
+                   //    3.切换屏幕轮播图
+                   //    判断是当前的是拿一屏
+                   if(olIndex<this.index){
+                       //用户点击的是以后的某一屏
+                       HomeListItems[olIndex].className='HomeListItem leftHide'
+                       HomeListItems[this.index].className='HomeListItem rightShow'
+                   }else if(olIndex>this.index){
+                       HomeListItems[oldIndex].className = 'HomeListItem rightHide';
+                       HomeListItems[this.index].className = 'HomeListItem leftShow';
+                   }
+                   //保存index
+                   olIndex=this.index
+               }
+           }
+       }
+       //自动轮播
+        autoPlay()
 
+        function autoPlay() {
+            setInterval(function () {
+                //判断轮播图是否正在切换
+                if(isAnimation){
+                    //轮播图正在切换中
+                    return;
+                }
+                //重置切换状态
+                isAnimation = true
+                //动画完成之后，恢复状态
+                setTimeout(function () {
+                    isAnimation = false
+                },3000)
+                //重置小圆点
+                for(var j=0;j<HomenavItems.length;j++){
+                    HomenavItems[j].className='HomenavItem'
+                }
+                //下一个小圆点高亮
+                HomenavItems[olIndex+1>HomenavItems.length-1?0:olIndex+1].className='HomenavItem active'
+                //自动切换轮播图
+                HomeListItems[olIndex].className='HomeListItem leftHide'
+                HomeListItems[olIndex+1>HomenavItems.length-1?0:olIndex+1].className='HomeListItem rightShow'
+                if(olIndex<HomenavItems.length-1){
+                    olIndex++
+                }else {
+                    olIndex=0
+                }
+            },3000)
+
+        }
 
 
     }
