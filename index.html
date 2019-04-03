@@ -73,13 +73,88 @@
             <!--第一屏-->
             <li class="contentItem">
                 <div class="contentInner">
-                    home
+                   <div class="HomeList">
+                       <div class="HomeListItem active"><span class="commonTitle">1</span></div>
+                       <div class="HomeListItem"><span class="commonTitle">2</span></div>
+                       <div class="HomeListItem"><span class="commonTitle">3</span></div>
+                       <div class="HomeListItem"><span class="commonTitle">4</span></div>
+                   </div>
+                   <div class="HomeListNav clearfix">
+                       <span class="HomenavItem active"></span>
+                       <span class="HomenavItem"></span>
+                       <span class="HomenavItem"></span>
+                       <span class="HomenavItem"></span>
+                   </div>
                 </div>
             </li>
             <!--第二屏-->
             <li class="contentItem">
                 <div class="contentInner">
-                    Course
+                    <div class=" Course1">
+                        <p class="commonTitle">EINBLICK</p>
+                        <p class="commonTitle">ERKENNTNIS</p>
+                        <p class="commonTitle">ERGEBNIS</p>
+                    </div>
+                    <div class="Course2">
+                        <p class="commonText"> Das Kundenvertrauen in unsere Kompetenz ist die notwendige Basis einer erfolgreichen Zusammenarbeit, gleichzeitig aber auch das größte Lob, das man uns entgegenbringen kann.
+                            <br>
+                            Diese und viele weitere große und kleine Kunden vertrauen uns seit Jahren, was uns stolz macht, und dafür sagen wir an dieser Stelle einfach mal.</p>
+                    </div>
+                    <div class="Course3 clearfix">
+                        <div class="plus"></div>
+                        <div class="plus"></div>
+                        <div class="plus"></div>
+                        <div class="plus"></div>
+                        <div class="plus"></div>
+                        <div class="course3Item">
+                            <div class="front"></div>
+                            <div class="back">我是一段文字</div>
+                        </div>
+                        <div class="course3Item">
+                            <div class="front"></div>
+                            <div class="back">我是一段文字</div>
+                        </div>
+                        <div class="course3Item">
+                            <div class="front"></div>
+                            <div class="back">我是一段文字</div>
+                        </div>
+                        <div class="course3Item">
+                            <div class="front"></div>
+                            <div class="back">我是一段文字</div>
+                        </div>
+                        <div class="course3Item">
+                            <div class="front"></div>
+                            <div class="back">我是一段文字</div>
+                        </div>
+                        <div class="course3Item">
+                            <div class="front"></div>
+                            <div class="back">我是一段文字</div>
+                        </div>
+                        <div class="course3Item">
+                            <div class="front"></div>
+                            <div class="back">我是一段文字</div>
+                        </div>
+                        <div class="course3Item">
+                            <div class="front"></div>
+                            <div class="back">我是一段文字</div>
+                        </div>
+                        <div class="course3Item">
+                            <div class="front"></div>
+                            <div class="back">我是一段文字</div>
+                        </div>
+                        <div class="course3Item">
+                            <div class="front"></div>
+                            <div class="back"></div>
+                        </div>
+                        <div class="course3Item">
+                            <div class="front"></div>
+                            <div class="back">我是一段文字</div>
+                        </div>
+                        <div class="course3Item">
+                            <div class="front"></div>
+                            <div class="back">我是一段文字</div>
+                        </div>
+                    </div>
                 </div>
             </li>
             <!--第三屏-->
@@ -229,7 +304,7 @@
         }
 
         //内容区移动逻辑
-        contentMove(3)
+        contentMove(0)
         function contentMove(index) {
             //1.给所有的up元素去除高亮
             for (var j=0; j<navUps.length; j++ ){
@@ -325,6 +400,13 @@
                 return false;
             }
         }
+
+
+
+
+        //动画
+
+
 
     }
 </script>
